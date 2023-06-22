@@ -114,3 +114,17 @@ main{
     min-height: 300px;
 }
 
+.fa-brands{
+    font-size: 30px !important;
+    padding-right: 5px;
+}
+
+.btn-outline-primary {
+    margin-right: 20px;
+    border-radius: 0%;
+    --bs-btn-color: #ffffff;
+    --bs-btn-border-color: #ffffff;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: #ffffff;
+    --bs-btn-active-border-color: #ffffff;
+}

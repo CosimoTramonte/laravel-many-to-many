@@ -25,6 +25,13 @@
 
     <div>
         <h3 class="py-4">Type -> {{$project->type}}</h3>
+        <h4 class="py-4">Technologies used:
+            @forelse ($project->technologies as $technology)
+                <span><i class="fa-brands fa-{{ $technology->name }}"></i></span>
+            @empty
+                <span>no technology</span>
+            @endforelse
+        </h4>
         <h6 class="d-inline py-4">Description: </h6>
         <div class="text-white">
             <p>{!! $project->description !!}</p>

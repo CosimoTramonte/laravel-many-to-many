@@ -39,7 +39,14 @@
                         @endif
                         ">{{$project->kind?->name}}</span></td>
                     <td>{{$project->type}}</td>
-                    <td></td>
+                    <td>
+                        @forelse ($project->technologies as $technology)
+                            <span><i class="fa-brands fa-{{ $technology->name }}"></i></span>
+                        @empty
+                            <span>NO Technologies</span>
+                        @endforelse
+
+                    </td>
                     @php
                         $dateOfStart = date_create($project->project_start);
                     @endphp

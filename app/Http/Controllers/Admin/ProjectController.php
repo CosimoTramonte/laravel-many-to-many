@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Kind;
 use App\Models\Project;
+use App\Models\Technology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,7 +31,8 @@ class ProjectController extends Controller
     public function create()
     {
         $kinds = Kind::all();
-        return view('admin.projects.create', compact('kinds'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('kinds','technologies'));
     }
 
     /**
@@ -53,9 +55,16 @@ class ProjectController extends Controller
             $form_data['image_path'] = Storage::put('uploads', $form_data['image']);
         }
 
-        $new_project = new Project();
-        $new_project->fill($form_data);
-        $new_project->save();
+        //$new_project = new Project();
+        //$new_project->fill($form_data);
+        //$new_project->save();
+
+        //new,fill e save in uno
+        $new_project = Project::create($form_data);
+
+        if(array_key_exists('technologies', $form_data)){
+            $new_project->technologies()->attach($form_data['technologies']);
+        }
 
         return redirect()->route('admin.projects.show', $new_project);
     }
@@ -85,7 +94,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $kinds = Kind::all();
-        return view('admin.projects.edit', compact('project', 'kinds'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'kinds','technologies'));
     }
 
     /**
@@ -119,6 +129,14 @@ class ProjectController extends Controller
             $form_data['image_path'] = Storage::put('uploads', $form_data['image']);
         }
 
+        if(array_key_exists('technologies', $form_data)){
+            //sincronizzo le modifiche TUTTTE
+            $project->technologies()->sync($form_data['technologies']);
+        }else{
+            //elimino la relazione
+            $project->technologies()->detach();
+        }
+
         $project->update($form_data);
 
         return redirect()->route('admin.projects.show', $project);
@@ -132,6 +150,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        //se nella migration non metto cascadeOnDelete devo mettere
+        // $project->technologies()->detach();
+
         //la elimino dallo storage
         if($project->image_path){
             Storage::disk('public')->delete($project->image_path);
