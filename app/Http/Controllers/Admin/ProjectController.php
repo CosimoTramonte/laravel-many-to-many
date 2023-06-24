@@ -23,6 +23,16 @@ class ProjectController extends Controller
         return view('admin.projects.index', compact('projects'));
     }
 
+    public function kindProjects(){
+        $kinds = Kind::all();
+        return view('admin.projects.kind-projects',compact('kinds'));
+    }
+
+    public function technologyProjects(){
+        $technologies = Technology::all();
+        return view('admin.projects.tech-projects',compact('technologies'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
