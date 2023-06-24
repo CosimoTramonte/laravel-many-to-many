@@ -13,6 +13,9 @@
                 text-bg-warning
             @endif
         ">{{$project->kind?->name}}</span>
+        <a href="{{route('admin.projects.edit', $project)}}" class="btn btn-warning"><i class="fa-solid fa-pen"></i></a>
+
+        @include('admin.partials.delete_modal')
     </h1>
 
     <div class="w-100">

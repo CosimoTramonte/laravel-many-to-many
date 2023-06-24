@@ -33,7 +33,18 @@
                             </li>
                         @endif
                     @else
-                        <li>
+                        <li class="d-flex">
+
+                            <form action="{{route('admin.projects.index')}}" class="d-flex me-3" method="GET">
+                                <input
+                                    type="text"
+                                    class="form-control me-3"
+                                    name="search"
+                                    placeholder="Cerca il progetto"
+                                >
+                                <button class="btn btn-primary me-3">Cerca</button>
+                            </form>
+
                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-light"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
